@@ -80,9 +80,9 @@ export default class Composer extends React.Component {
 
   render() {
     if(Platform.OS == "android") {
-      return renderAndroid();
+      return this.renderAndroid();
     } else {
-      return renderIOS();
+      return this.renderIOS();
     }
   }
 

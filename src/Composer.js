@@ -29,7 +29,33 @@ export default class Composer extends React.Component {
     this.props.onTextChanged(text);
   }
 
-  render() {
+  /**
+  *         value={this.props.text}
+  * > replaced to prevent an issue on Android
+  */
+  renderAndroid() {
+    return (
+      <TextInput
+        testID={this.props.placeholder}
+        accessible
+        accessibilityLabel={this.props.placeholder}
+        placeholder={this.props.placeholder}
+        placeholderTextColor={this.props.placeholderTextColor}
+        multiline={this.props.multiline}
+        onChange={(e) => this.onContentSizeChange(e)}
+        onContentSizeChange={(e) => this.onContentSizeChange(e)}
+        onChangeText={(text) => this.onChangeText(text)}
+        style={[styles.textInput, this.props.textInputStyle, { height: this.props.composerHeight }]}
+        autoFocus={this.props.textInputAutoFocus}
+        enablesReturnKeyAutomatically
+        underlineColorAndroid="transparent"
+        keyboardAppearance={this.props.keyboardAppearance}
+        {...this.props.textInputProps}
+      />
+    );
+  }
+
+  renderIOS() {
     return (
       <TextInput
         testID={this.props.placeholder}
@@ -50,6 +76,14 @@ export default class Composer extends React.Component {
         {...this.props.textInputProps}
       />
     );
+  }
+
+  render() {
+    if(Platform.OS == "android") {
+      return renderAndroid();
+    } else {
+      return renderIOS();
+    }
   }
 
 }
